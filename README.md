@@ -2,10 +2,10 @@
 
 here is an addon that will put a new item under the manage context menu (for movies and tvshows). 
 
-my motivation was to seperate our massive movie & tv collections into 4, for the wife, kid, me, and 1 for the family. i did this for me, but perhaps others might like it too. 
+my motivation was to separate our massive movie & tv collections into 4, for the wife, kid, me, and 1 for the family. i did this for me, but perhaps others might like it too. 
 
 # WARNING - Use At Your Own Risk
-i take no responsability for anything that happens. if your cat has babies, if your plants become sentient or if your library gets borked. i might be able to help, but i can't promise. the best thing to do is always make a backup. 
+i take no responsibility for anything that happens. if your cat has babies, if your plants become sentient or if your library gets borked. i might be able to help, but i can't promise. the best thing to do is always make a backup. 
 
 # what is does
 - pulls a list of tags currently in the db
