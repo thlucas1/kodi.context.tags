@@ -18,5 +18,5 @@ suggestions are welcome, pull requests preferred. it does exactly what i want it
 - perhaps add the ability to create new tags ?
 
 # Download and install
-- grab the [zip file](https://github.com/zosky/kodi.context.tags/raw/master/context.tags-0.0.1.zip)
+- grab the [zip file](https://github.com/zosky/kodi.context.tags/archive/master.zip)
 - install in kodi ( settings > addons > install from zip )
