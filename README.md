@@ -7,7 +7,7 @@ my motivation was to separate our massive movie & tv collections into 4 sections
 # WARNING - Use At Your Own Risk
 i take no responsibility for anything that happens. if your cat has babies, if your plants become sentient or if your library gets borked. i might be able to help, but i can't promise. the best thing to do is always make a backup. 
 
-# what is does
+# what it does
 - pulls a list of tags currently in the db
 - compares that with those of the item currently selected
 - presents a multi-select box to modify the selection
