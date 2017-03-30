@@ -17,18 +17,18 @@
 
 import xbmc
 import xbmcgui
-import json
 import xbmcaddon
+import json
 
 addon = xbmcaddon.Addon()
 
 def main():
 
-## GET ITEM DATA
+    # GET ITEM DATA
     assetID = int(xbmc.getInfoLabel('ListItem.DBID'))
     assetTYPE = xbmc.getInfoLabel('ListItem.DBtype')
 
-## GET ITEM TAGS
+    # GET ITEM TAGS
     GETassetTAGS = {}
     GETassetTAGS['jsonrpc'] = "2.0"
     GETassetTAGS['id'] = "tagSelector"
@@ -47,7 +47,7 @@ def main():
     elif assetTYPE == "tvshow":
         assetTAGS = assetTAGS['result']['tvshowdetails']['tag']
 
-### GET ALL TAGS (FOR assetTYPE)
+    # GET ALL TAGS (FOR assetTYPE)
     GETallTAGS = {}
     GETallTAGS['jsonrpc'] = "2.0"
     GETallTAGS['id'] = "tagSelector"
@@ -58,26 +58,26 @@ def main():
     allTAGS = json.loads( xbmc.executeJSONRPC( json.dumps( GETallTAGS )))
     allTAGS = allTAGS['result']['tags']
 
-#### MASSAGE TAG LIST INTO MULTI-SELECT FORMAT
+    # MASSAGE TAG LIST INTO MULTI-SELECT FORMAT
     tags = []
     for item in allTAGS:
         tags.append(item['label'])
 
-### IDENTIFY PRESELECTED TAGS
+    # IDENTIFY PRESELECTED TAGS
     preSelectedTAGS = []
     for item in assetTAGS:
         preSelectedTAGS.append(tags.index(item))
 
-## MAKE DIALOG
+    # MAKE DIALOG
     dialog = xbmcgui.Dialog()
     returned = dialog.multiselect(addon.getLocalizedString(32001), tags, preselect=preSelectedTAGS)
-    # if not cancled
+    # IF NOT CANCELED
     if returned is not None:        
         selected = []
         for n in returned:
            selected.append(tags[n])
 
-        ## SUBMIT
+        # SUBMIT
         SETnewTAGS = {}
         SETnewTAGS['jsonrpc'] = "2.0"
         SETnewTAGS['id'] = "tagSelector"
