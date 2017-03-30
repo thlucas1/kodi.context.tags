@@ -22,40 +22,27 @@ import json
 
 addon = xbmcaddon.Addon()
 
-def main():
 
+def main():
     # GET ITEM DATA
     assetID = int(xbmc.getInfoLabel('ListItem.DBID'))
     assetTYPE = xbmc.getInfoLabel('ListItem.DBtype')
 
     # GET ITEM TAGS
-    GETassetTAGS = {}
-    GETassetTAGS['jsonrpc'] = "2.0"
-    GETassetTAGS['id'] = "tagSelector"
-    GETassetTAGS['params'] = {}
-    if assetTYPE == "movie": 
-        GETassetTAGS['method'] = "VideoLibrary.GetMovieDetails"
-        GETassetTAGS['params']['movieid'] = assetID
-    elif assetTYPE == "tvshow":
-        GETassetTAGS['method'] = "VideoLibrary.GetTVShowDetails"
-        GETassetTAGS['params']['tvshowid'] = assetID
-    GETassetTAGS['params']['properties'] = [ "tag" ]
+    GETassetTAGS = {'jsonrpc': '2.0', 'id': 'tagSelector',
+                    'method': 'VideoLibrary.Get' + assetTYPE + 'Details',
+                    'params': {assetTYPE + 'id': assetID,
+                               'properties': ['tag']}}
 
-    assetTAGS = json.loads( xbmc.executeJSONRPC( json.dumps( GETassetTAGS )))
-    if assetTYPE == "movie": 
-        assetTAGS = assetTAGS['result']['moviedetails']['tag']
-    elif assetTYPE == "tvshow":
-        assetTAGS = assetTAGS['result']['tvshowdetails']['tag']
+    assetTAGS = json.loads(xbmc.executeJSONRPC(json.dumps(GETassetTAGS)))
+    assetTAGS = assetTAGS['result'][assetTYPE + 'details']['tag']
 
     # GET ALL TAGS (FOR assetTYPE)
-    GETallTAGS = {}
-    GETallTAGS['jsonrpc'] = "2.0"
-    GETallTAGS['id'] = "tagSelector"
-    GETallTAGS['method'] = "VideoLibrary.GetTags"
-    GETallTAGS['params'] = {}
-    GETallTAGS['params']['type'] = assetTYPE
+    GETallTAGS = {'jsonrpc': '2.0', 'id': 'tagSelector',
+                  'method': 'VideoLibrary.GetTags',
+                  'params': {'type': assetTYPE}}
 
-    allTAGS = json.loads( xbmc.executeJSONRPC( json.dumps( GETallTAGS )))
+    allTAGS = json.loads(xbmc.executeJSONRPC(json.dumps(GETallTAGS)))
     allTAGS = allTAGS['result']['tags']
 
     # MASSAGE TAG LIST INTO MULTI-SELECT FORMAT
@@ -72,26 +59,19 @@ def main():
     dialog = xbmcgui.Dialog()
     returned = dialog.multiselect(addon.getLocalizedString(32001), tags, preselect=preSelectedTAGS)
     # IF NOT CANCELED
-    if returned is not None:        
+    if returned is not None:
         selected = []
         for n in returned:
-           selected.append(tags[n])
+            selected.append(tags[n])
 
         # SUBMIT
-        SETnewTAGS = {}
-        SETnewTAGS['jsonrpc'] = "2.0"
-        SETnewTAGS['id'] = "tagSelector"
-        SETnewTAGS['params'] = {}
-        if assetTYPE == "movie": 
-            SETnewTAGS['method'] = "VideoLibrary.SetMovieDetails"
-            SETnewTAGS['params']['movieid'] = assetID
-        elif assetTYPE == "tvshow":
-            SETnewTAGS['method'] = "VideoLibrary.SetTVShowDetails"
-            SETnewTAGS['params']['tvshowid'] = assetID
-        SETnewTAGS['params']['tag'] = selected
+        SETnewTAGS = {'jsonrpc': '2.0', 'id': 'tagSelector',
+                      'method': 'VideoLibrary.Set' + assetTYPE + 'Details',
+                      'params': {assetTYPE + 'id': assetID,
+                                 'tag': selected}}
 
-        xbmc.executeJSONRPC( json.dumps( SETnewTAGS ))
+        xbmc.executeJSONRPC(json.dumps(SETnewTAGS))
+
 
 if __name__ == '__main__':
     main()
-
