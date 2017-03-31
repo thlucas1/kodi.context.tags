@@ -20,8 +20,6 @@ import xbmcgui
 import xbmcaddon
 import json
 
-addon = xbmcaddon.Addon()
-
 
 def main():
     # GET ITEM DATA
@@ -57,7 +55,8 @@ def main():
 
     # MAKE DIALOG
     dialog = xbmcgui.Dialog()
-    returned = dialog.multiselect(addon.getLocalizedString(32001), tags, preselect=preSelectedTAGS)
+    title = xbmcaddon.Addon().getLocalizedString(32001)
+    returned = dialog.multiselect(title, tags, preselect=preSelectedTAGS)
     # IF NOT CANCELED
     if returned is not None:
         selected = []
