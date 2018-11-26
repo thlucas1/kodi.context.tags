@@ -43,6 +43,9 @@ def main():
     allTAGS = json.loads(xbmc.executeJSONRPC(json.dumps(GETallTAGS)))
     allTAGS = allTAGS['result']['tags']
 
+    # SORT TAGS ALPHABETICALLY
+    allTAGS.sort()
+
     # MASSAGE TAG LIST INTO MULTI-SELECT FORMAT
     tags = []
     for item in allTAGS:
